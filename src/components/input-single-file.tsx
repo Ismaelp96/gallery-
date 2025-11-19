@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
+import React, { useMemo } from 'react';
 import { useWatch } from 'react-hook-form';
 import { tv, type VariantProps } from 'tailwind-variants';
 
@@ -7,7 +7,6 @@ import UploadFileIcon from '../assets/icons/upload-file.svg?react';
 import FileImageIcon from '../assets/icons/image.svg?react';
 import Icon from './icon';
 import Text, { textVariants } from './text';
-import { useMemo } from 'react';
 
 export const inputSingleFileVariants = tv({
 	base: `
@@ -41,6 +40,7 @@ interface InputSingleFileProps
 	form: any;
 	allowedExtensions: string[];
 	maxFileSizeInMb: number;
+	replaceBy: React.ReactNode;
 	error?: React.ReactNode;
 }
 
@@ -48,6 +48,7 @@ export default function InputSingleFile({
 	form,
 	allowedExtensions,
 	maxFileSizeInMb,
+	replaceBy,
 	size,
 	error,
 	...props
@@ -123,27 +124,30 @@ export default function InputSingleFile({
 					</div>
 				</>
 			) : (
-				<div className='flex gap-3 items-center border border-solid border-border-primary mt-5 p-3 rounded'>
-					<Icon svg={FileImageIcon} className='fill-white w-6 h-6' />
-					<div className='flex flex-col'>
-						<div className='truncate max-w-80'>
-							<Text variant='label-medium' className='text-placeholder'>
-								{formFile.name}
-							</Text>
-						</div>
-						<div className='flex'>
-							<button
-								type='button'
-								onClick={() => form.setValue(name, undefined)}
-								className={textVariants({
-									variant: 'label-small',
-									className: 'text-accent-red cursor-pointer hover:underline',
-								})}>
-								Remover
-							</button>
+				<>
+					{replaceBy}
+					<div className='flex gap-3 items-center border border-solid border-border-primary mt-5 p-3 rounded'>
+						<Icon svg={FileImageIcon} className='fill-white w-6 h-6' />
+						<div className='flex flex-col'>
+							<div className='truncate max-w-80'>
+								<Text variant='label-medium' className='text-placeholder'>
+									{formFile.name}
+								</Text>
+							</div>
+							<div className='flex'>
+								<button
+									type='button'
+									onClick={() => form.setValue(name, undefined)}
+									className={textVariants({
+										variant: 'label-small',
+										className: 'text-accent-red cursor-pointer hover:underline',
+									})}>
+									Remover
+								</button>
+							</div>
 						</div>
 					</div>
-				</div>
+				</>
 			)}
 		</div>
 	);
