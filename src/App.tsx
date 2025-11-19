@@ -61,7 +61,12 @@ export default function App() {
 				<InputCheckbox />
 			</div>
 			<div>
-				<InputSingleFile form={form} {...form.register('file')} />
+				<InputSingleFile
+					form={form}
+					{...form.register('file')}
+					allowedExtensions={['png', 'jpg', 'jpeg', 'webp']}
+					maxFileSizeInMb={50}
+				/>
 			</div>
 		</div>
 	);
