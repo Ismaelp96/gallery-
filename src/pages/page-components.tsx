@@ -10,7 +10,7 @@ import InputText from '../components/input-text';
 import InputCheckbox from '../components/input-checkbox';
 import InputSingleFile from '../components/input-single-file';
 import { useForm } from 'react-hook-form';
-import ImageFilePreview from '../components/image-file-preview';
+import ImagePreview from '../components/image-preview';
 import {
 	Dialog,
 	DialogBody,
@@ -91,7 +91,7 @@ export default function PageComponents() {
 								{...form.register('file')}
 								allowedExtensions={['png', 'jpg', 'jpeg', 'webp']}
 								maxFileSizeInMb={50}
-								replaceBy={<ImageFilePreview src={fileSrc} />}
+								replaceBy={<ImagePreview src={fileSrc} />}
 							/>
 						</DialogBody>
 						<DialogFooter>
