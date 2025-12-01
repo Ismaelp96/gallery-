@@ -1,10 +1,12 @@
+import { Link } from 'react-router';
+
 import type { Photo } from '../models/photo';
+
 import ImagePreview from '../../../components/image-preview';
 import Skeleton from '../../../components/skeleton';
 import Text from '../../../components/text';
 import Badge from '../../../components/badge';
 import { buttonTextVariants, buttonVariants } from '../../../components/button';
-import { Link } from 'react-router';
 
 interface PhotoWidgetProps {
 	photo: Photo;
@@ -12,11 +14,12 @@ interface PhotoWidgetProps {
 }
 
 export default function PhotoWidget({ photo, loading }: PhotoWidgetProps) {
+	const url = import.meta.env.VITE_IMAGES_URL;
 	return (
 		<div className='flex flex-col gap-4'>
 			{!loading ? (
 				<ImagePreview
-					src={`/images/${photo.imageId}`}
+					src={`${url}/${photo.imageId}`}
 					title={photo.title}
 					imageClassName='w-[10.875rem] h-[10.875rem] rounded-lg'
 				/>

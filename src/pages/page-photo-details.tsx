@@ -12,6 +12,7 @@ import AlbumsListSelectable from '../contexts/albums/components/albums-list-sele
 import PhotosNavigator from '../contexts/photos/components/photos-navigator';
 
 export function PagePhotoDetails() {
+	const { id } = useParams();
 	const { albums, isLoadingAlbums } = useAlbums();
 
 	const isLoadingPhoto = false;
