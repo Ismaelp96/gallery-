@@ -1,16 +1,18 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
 
 import SearchIcon from '../assets/icons/search.svg?react';
-
 import InputText from './input-text';
 import { debounce } from '../helpers/utils';
+import usePhotos from '../contexts/photos/hooks/use-photos';
 
 export default function PhotoSearch() {
 	const [inputValue, setInputValue] = React.useState('');
-	/* eslint-disable react-hooks/exhaustive-deps */
+	const { filters } = usePhotos();
+
 	const debouncedSetValue = React.useCallback(
-		debounce((value: string) => console.log('Valor com debounce', value), 1000),
-		[],
+		debounce((value: string) => filters.setQ(value), 200),
+		[filters.setQ],
 	);
 
 	function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
