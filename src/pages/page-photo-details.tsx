@@ -13,7 +13,7 @@ import { url } from '../helpers/api';
 
 export function PagePhotoDetails() {
 	const { id } = useParams();
-	const { photo, isLoadingPhoto } = usePhoto(id);
+	const { photo, isLoadingPhoto, previousPhotoId, nextPhotoId } = usePhoto(id);
 	const { albums, isLoadingAlbums } = useAlbums();
 
 	if (!isLoadingPhoto && !photo) {
@@ -29,7 +29,11 @@ export function PagePhotoDetails() {
 				) : (
 					<Skeleton className='w-48 h8' />
 				)}
-				<PhotosNavigator />
+				<PhotosNavigator
+					loading={isLoadingPhoto}
+					previousPhotoId={previousPhotoId}
+					nextPhotoId={nextPhotoId}
+				/>
 			</header>
 			<div className='grid grid-cols-[21rem_1fr] gap-24'>
 				{!isLoadingPhoto ? (
