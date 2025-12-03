@@ -1,6 +1,6 @@
-import useAlbums from '../contexts/albums/hooks/use-albums';
-import type { Photo } from '../contexts/photos/models/photo';
+import { useParams } from 'react-router';
 
+import useAlbums from '../contexts/albums/hooks/use-albums';
 import Button from '../components/button';
 import Container from '../components/container';
 import ImagePreview from '../components/image-preview';
@@ -8,22 +8,17 @@ import Skeleton from '../components/skeleton';
 import Text from '../components/text';
 import AlbumsListSelectable from '../contexts/albums/components/albums-list-selectable';
 import PhotosNavigator from '../contexts/photos/components/photos-navigator';
+import usePhoto from '../contexts/photos/hooks/use-photo';
+import { url } from '../helpers/api';
 
 export function PagePhotoDetails() {
+	const { id } = useParams();
+	const { photo, isLoadingPhoto } = usePhoto(id);
 	const { albums, isLoadingAlbums } = useAlbums();
 
-	const isLoadingPhoto = false;
-
-	const photo = {
-		id: '123',
-		title: 'Olá mundo!',
-		imageId: 'portrait-tower.png',
-		albums: [
-			{ id: '3421', title: 'Esportes' },
-			{ id: '1234', title: 'Natureza' },
-			{ id: '4132', title: 'Geométrico' },
-		],
-	} as Photo;
+	if (!isLoadingPhoto && !photo) {
+		return <div>Foto não encontrada</div>;
+	}
 	return (
 		<Container>
 			<header className='flex items-center justify-between gap-8 mb-8'>
@@ -40,7 +35,7 @@ export function PagePhotoDetails() {
 				{!isLoadingPhoto ? (
 					<div className='space-y-3'>
 						<ImagePreview
-							src={`/images/${photo.imageId}`}
+							src={`${url}/${photo?.imageId}`}
 							title={photo?.title}
 							imageClassName='h-[21rem]'
 						/>
@@ -56,11 +51,13 @@ export function PagePhotoDetails() {
 					<Text as='h3' variant='heading-medium' className='mb-6'>
 						Álbuns
 					</Text>
-					<AlbumsListSelectable
-						photo={photo}
-						albums={albums}
-						loading={isLoadingAlbums}
-					/>
+					{photo && (
+						<AlbumsListSelectable
+							photo={photo}
+							albums={albums}
+							loading={isLoadingAlbums}
+						/>
+					)}
 				</div>
 			</div>
 		</Container>

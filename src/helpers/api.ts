@@ -6,3 +6,5 @@ export const api = axios.create({
 
 export const fetcher = (url: string, options: AxiosRequestConfig = {}) =>
 	api.get(url, options).then((res) => res.data);
+
+export const url = import.meta.env.VITE_IMAGES_URL;

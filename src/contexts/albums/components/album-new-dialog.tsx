@@ -16,13 +16,13 @@ import Text from '../../../components/text';
 import Skeleton from '../../../components/skeleton';
 import PhotoImageSelectable from '../../photos/components/photo-image-selectable';
 import usePhotos from '../../photos/hooks/use-photos';
+import { url } from '../../../helpers/api';
 
 interface PhotoNewDialogProps {
 	trigger: React.ReactNode;
 }
 
 export default function AlbumNewDialog({ trigger }: PhotoNewDialogProps) {
-	const url = import.meta.env.VITE_IMAGES_URL;
 	const { photos, isLoadingPhotos } = usePhotos();
 
 	function handleTogglePhoto(selected: boolean, photoId: string) {

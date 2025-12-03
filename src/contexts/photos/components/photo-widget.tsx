@@ -7,6 +7,7 @@ import Skeleton from '../../../components/skeleton';
 import Text from '../../../components/text';
 import Badge from '../../../components/badge';
 import { buttonTextVariants, buttonVariants } from '../../../components/button';
+import { url } from '../../../helpers/api';
 
 interface PhotoWidgetProps {
 	photo: Photo;
@@ -14,7 +15,6 @@ interface PhotoWidgetProps {
 }
 
 export default function PhotoWidget({ photo, loading }: PhotoWidgetProps) {
-	const url = import.meta.env.VITE_IMAGES_URL;
 	return (
 		<div className='flex flex-col gap-4'>
 			{!loading ? (
