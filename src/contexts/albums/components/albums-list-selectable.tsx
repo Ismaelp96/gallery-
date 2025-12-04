@@ -35,10 +35,6 @@ export default function AlbumsListSelectable({
 			albumIds = [...photo.albums.map((album) => album.id, albumId)];
 		}
 
-		console.log(
-			'Essses são os albums que vamos enviar para o backend',
-			albumIds,
-		);
 		return albumIds;
 	}
 	return (

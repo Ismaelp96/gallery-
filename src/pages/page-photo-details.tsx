@@ -15,7 +15,6 @@ export function PagePhotoDetails() {
 	const { id } = useParams();
 	const { photo, isLoadingPhoto, previousPhotoId, nextPhotoId } = usePhoto(id);
 
-	console.log('photo', photo);
 	const { albums, isLoadingAlbums } = useAlbums();
 
 	if (!isLoadingPhoto && !photo) {

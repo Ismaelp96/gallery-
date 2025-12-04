@@ -29,12 +29,12 @@ export default function PhotoNewDialog({ trigger }: PhotoNewDialogProps) {
 	const [modalOpen, setModalOpen] = useState(false);
 	const [isCreatingPhoto, setIsCreatingPhoto] = useTransition();
 	const { albums, isLoadingAlbums } = useAlbums();
-
 	const { createPhoto } = usePhoto();
 
 	const form = useForm<PhotoNewFormSchema>({
 		resolver: zodResolver(photoNewFormSchema),
 	});
+
 	const file = form.watch('file');
 	const fileSrc = file?.[0] ? URL.createObjectURL(file[0]) : undefined;
 
