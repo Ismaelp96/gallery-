@@ -45,7 +45,7 @@ export function PagePhotoDetails() {
 							imageClassName='h-[21rem]'
 						/>
 					) : (
-						<Skeleton className='h-[21rem]' />
+						<Skeleton className='h-84' />
 					)}
 
 					{!isLoadingPhoto ? (
