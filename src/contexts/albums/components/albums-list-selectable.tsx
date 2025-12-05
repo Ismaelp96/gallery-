@@ -1,5 +1,3 @@
-import type React from 'react';
-
 import type { Album } from '../models/album';
 import type { Photo } from '../../photos/models/photo';
 import cx from 'classnames';
@@ -7,6 +5,8 @@ import Text from '../../../components/text';
 import InputCheckbox from '../../../components/input-checkbox';
 import Divider from '../../../components/divider';
 import Skeleton from '../../../components/skeleton';
+import usePhotoAlbums from '../../photos/hooks/use-photo-albums';
+import { useTransition } from 'react';
 
 interface AlbumsListSelectableProps extends React.ComponentProps<'ul'> {
 	loading?: boolean;
@@ -20,22 +20,27 @@ export default function AlbumsListSelectable({
 	className,
 	...props
 }: AlbumsListSelectableProps) {
+	const { managePhotoOnAlbum } = usePhotoAlbums();
+	const [isUpdatingPhoto, setIsUpdatingPhoto] = useTransition();
+
 	function isChecked(albumId: string) {
 		return photo?.albums?.some((album) => album.id === albumId);
 	}
 
-	function handlePhotoOnAlbum(albumId: string) {
-		let albumIds = [];
+	async function handlePhotoOnAlbum(albumId: string) {
+		let albumsIds = [];
 
 		if (isChecked(albumId)) {
-			albumIds = photo?.albums
-				?.filter((album) => album.id !== albumId)
+			albumsIds = photo.albums
+				.filter((album) => album.id !== albumId)
 				.map((album) => album.id);
 		} else {
-			albumIds = [...photo.albums.map((album) => album.id, albumId)];
+			albumsIds = [...photo.albums.map((album) => album.id, albumId)];
 		}
 
-		return albumIds;
+		setIsUpdatingPhoto(async () => {
+			await managePhotoOnAlbum(photo.id, albumsIds);
+		});
 	}
 	return (
 		<ul className={cx('flex flex-col gap-4', className)} {...props}>
@@ -47,7 +52,8 @@ export default function AlbumsListSelectable({
 							<Text>{album.title}</Text>
 							<InputCheckbox
 								defaultChecked={isChecked(album.id)}
-								onClick={() => handlePhotoOnAlbum(album.id)}
+								onChange={() => handlePhotoOnAlbum(album.id)}
+								disabled={isUpdatingPhoto}
 							/>
 						</div>
 						{index !== albums.length - 1 && <Divider className='mt-4' />}

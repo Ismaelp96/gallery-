@@ -10,11 +10,11 @@ import AlbumsListSelectable from '../contexts/albums/components/albums-list-sele
 import PhotosNavigator from '../contexts/photos/components/photos-navigator';
 import usePhoto from '../contexts/photos/hooks/use-photo';
 import { url } from '../helpers/api';
+import PhotoDeleteDialog from '../contexts/photos/components/photo-delete-dialog';
 
 export function PagePhotoDetails() {
 	const { id } = useParams();
 	const { photo, isLoadingPhoto, previousPhotoId, nextPhotoId } = usePhoto(id);
-
 	const { albums, isLoadingAlbums } = useAlbums();
 
 	if (!isLoadingPhoto && !photo) {
@@ -37,21 +37,26 @@ export function PagePhotoDetails() {
 				/>
 			</header>
 			<div className='grid grid-cols-[21rem_1fr] gap-24'>
-				{!isLoadingPhoto ? (
-					<div className='space-y-3'>
+				<div className='space-y-3'>
+					{!isLoadingPhoto ? (
 						<ImagePreview
 							src={`${url}/${photo?.imageId}`}
 							title={photo?.title}
 							imageClassName='h-[21rem]'
 						/>
-						<Button variant='destructive'>Excluir</Button>
-					</div>
-				) : (
-					<div className='space-y-3'>
+					) : (
 						<Skeleton className='h-[21rem]' />
+					)}
+
+					{!isLoadingPhoto ? (
+						<PhotoDeleteDialog
+							id={id!}
+							trigger={<Button variant='destructive'>Excluir</Button>}
+						/>
+					) : (
 						<Skeleton className='w-20 h-10' />
-					</div>
-				)}
+					)}
+				</div>
 				<div className='py-3'>
 					<Text as='h3' variant='heading-medium' className='mb-6'>
 						Álbuns

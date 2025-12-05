@@ -59,7 +59,7 @@ export default function PhotoNewDialog({ trigger }: PhotoNewDialogProps) {
 		form.setValue('albumsIds', Array.from(albumsSet));
 	}
 
-	function handleSubmit(payload: PhotoNewFormSchema) {
+	async function handleSubmit(payload: PhotoNewFormSchema) {
 		setIsCreatingPhoto(async () => {
 			await createPhoto(payload);
 			setModalOpen(false);

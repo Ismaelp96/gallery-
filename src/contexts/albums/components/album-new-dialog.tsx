@@ -55,7 +55,7 @@ export default function AlbumNewDialog({ trigger }: PhotoNewDialogProps) {
 		form.setValue('photosIds', newValue);
 	}
 
-	function heandleSubmit(payload: AlbumNewFormSchema) {
+	async function heandleSubmit(payload: AlbumNewFormSchema) {
 		setIsCreatingAlbum(async () => {
 			await createAlbum(payload);
 			setModalOpen(false);
